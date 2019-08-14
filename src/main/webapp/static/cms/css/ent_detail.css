@@ -1,0 +1,26 @@
+.content{
+    width: 900px;
+    margin: 20px auto;
+    display: none;
+    background:none;
+}
+.content table{
+    width: 100%;
+}
+.content table tr{
+    height: 30px;
+    text-indent: 10px;
+}
+.content .table{
+	background-color:#efefef;
+}
+.content .table h3{
+	background-color: #dedede;
+    height: 40px;
+    line-height: 40px;
+    text-indent: 10px;
+    font-size: 17px;
+}
+.content .table div{
+	padding:0 10px 10px 10px;
+}

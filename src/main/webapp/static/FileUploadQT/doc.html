@@ -1,0 +1,288 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>文件上传</title>
+    <link href="css/iconfont.css" rel="stylesheet" type="text/css"/>
+    <link href="css/fileUpload.css" rel="stylesheet" type="text/css">
+    <script src="http://www.jq22.com/jquery/jquery-1.10.2.js"></script>
+    <script type="text/javascript" src="js/fileUpload.js"></script>
+    <style type="text/css">
+        table{
+            border: none;
+            border-collapse: collapse;
+        }
+        table tr td,table tr th{
+            text-align: center;
+        }
+        table tr th{
+            height: 30px;
+            background-color: #0099FF;
+        }
+        table tbody tr{
+            min-height: 40px;
+            line-height: 25px;
+            background-color: #DDDDDD;
+        }
+        table tbody tr:nth-child(2n){
+            background-color: #ffffff;
+        }
+    </style>
+</head>
+<body>
+    <h3>关于文件上传的基本演示</h3>
+
+    <div id="fileUploadContent" class="fileUploadContent"></div>
+    
+    <button onclick="testUpload()">提交</button>
+    <button id="selfUploadBt">设定id提交</button>
+    <h3>关于文件上传的基本说明</h3>
+    <b>第一步：导入js和样式以及字体</b>
+    <blockquote>
+        <pre style="text-align: left;font-size: 16px;">
+           &lt;link href=&quot;css/iconfont.css&quot; rel=&quot;stylesheet&quot; type=&quot;text/css&quot;/&gt;<br/>
+            &lt;link href=&quot;css/fileUpload.css&quot; rel=&quot;stylesheet&quot; type=&quot;text/css&quot;&gt;<br/>
+            &lt;script src=&quot;http://www.jq22.com/jquery/jquery-1.10.2.js&quot;&gt;&lt;/script&gt;<br/>
+            &lt;script type=&quot;text/javascript&quot; src=&quot;js/fileUpload.js&quot;&gt;&lt;/script&gt;<br/>
+        </pre>
+    </blockquote>
+    <b>第二步：初始化上传组件</b>
+    <blockquote>
+        <pre style="text-align: left;font-size: 16px;">
+            $("#fileUploadContent").initUpload({
+                "uploadUrl":"#",//上传文件信息地址
+                "progressUrl":"#",//获取进度信息地址，可选，注意需要返回的data格式如下（{bytesRead: 102516060, contentLength: 102516060, items: 1, percent: 100, startTime: 1489223136317, useTime: 2767}）
+                "selfUploadBtId":"selfUploadBt",//自定义文件上传按钮id
+                "isHiddenUploadBt":false,//是否隐藏上传按钮
+                "isHiddenCleanBt":false,//是否隐藏清除按钮
+                "isAutoClean":false,//是否上传完成后自动清除
+                "velocity":10,//模拟进度上传数据
+                //"showSummerProgress":false,//总进度条，默认限制
+                //"scheduleStandard":true,//模拟进度的方式，设置为true是按总进度，用于控制上传时间，如果设置为false,按照文件数据的总量,默认为false
+                //"size":350,//文件大小限制，单位kb,默认不限制
+                //"maxFileNumber":3,//文件个数限制，为整数
+                //"filelSavePath":"",//文件上传地址，后台设置的根目录
+                //"beforeUpload":beforeUploadFun,//在上传前执行的函数
+                //"onUpload":onUploadFun，//在上传后执行的函数
+                // autoCommit:true,//文件是否自动上传
+                //"fileType":['png','jpg','docx','doc']，//文件类型限制，默认不限制，注意写的是文件后缀
+
+            });
+        </pre>
+    </blockquote>
+    <h3>关于文件上传的参数说明</h3>
+    <table style="width: 900px;">
+        <thead>
+            <tr>
+                <th style="width: 200px">属性</th>
+                <th style="width: 100px">默认</th>
+                <th style="width: 100px">是否必需</th>
+                <th style="width: 500px">功能</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td>uploadUrl</td>
+                <td>-</td>
+                <td>是</td>
+                <td>上传地址</td>
+            </tr>
+            <tr>
+                <td>progressUrl</td>
+                <td>#</td>
+                <td>否</td>
+                <td>获取上传进度信息的url，注意需要返回的data格式如下（{bytesRead: 102516060, contentLength: 102516060, items: 1, percent: 100, startTime: 1489223136317, useTime: 2767}）</td>
+            </tr>
+            <tr>
+                <td>scheduleStandard</td>
+                <td>false</td>
+                <td>否</td>
+                <td>模拟进度的模式</td>
+            </tr>
+            <tr>
+                <td>scheduleStandard</td>
+                <td>false</td>
+                <td>否</td>
+                <td>模拟进度的模式：可选值为false 和 true,<br/>false:按上传大小控制进度上传<br/>true:控制时间模式上传，如每秒5%</td>
+            </tr>
+            <tr>
+                <td>selfUploadBtId</td>
+                <td></td>
+                <td>否</td>
+                <td>自定义文件上传按钮id</td>
+            </tr>
+            <tr>
+                <td>velocity</td>
+                <td>10</td>
+                <td>否</td>
+                <td>模拟进度条速度</td>
+            </tr>
+            <tr>
+                <td>rememberUpload</td>
+                <td>false</td>
+                <td>否</td>
+                <td>是否记住上传文件（刷新页面无效）</td>
+            </tr>
+            <tr>
+                <td>autoCommit</td>
+                <td>false</td>
+                <td>否</td>
+                <td>是否自动上传</td>
+            </tr>
+            <tr>
+                <td>isHiddenUploadBt</td>
+                <td>false</td>
+                <td>否</td>
+                <td>是否隐藏上传按钮</td>
+            </tr>
+            <tr>
+                <td>isHiddenCleanBt</td>
+                <td>false</td>
+                <td>否</td>
+                <td>是否隐藏清除按钮</td>
+            </tr>
+            <tr>
+                <td>isAutoClean</td>
+                <td>false</td>
+                <td>否</td>
+                <td>上传完成后是否自动清除</td>
+            </tr>
+            <tr>
+                <td>canDrag</td>
+                <td>true</td>
+                <td>否</td>
+                <td>是否可以拖动</td>
+            </tr>
+            <tr>
+                <td>fileType</td>
+                <td></td>
+                <td>否</td>
+                <td>文件类型限制，默认不限制，注意写的是文件后缀，如：['png','jpg','docx','doc']</td>
+            </tr>
+            <tr>
+                <td>size</td>
+                <td>-1</td>
+                <td>否</td>
+                <td>文件大小限制,单位kB，默认不限制</td>
+            </tr>
+            <tr>
+                <td>ismultiple</td>
+                <td>true</td>
+                <td>否</td>
+                <td>是否可以多选</td>
+            </tr>
+            <tr>
+                <td>showSummerProgress</td>
+                <td>true</td>
+                <td>否</td>
+                <td>是否显示总进度条，默认显示</td>
+            </tr>
+
+            <tr>
+                <td>showFileItemProgress</td>
+                <td>true</td>
+                <td>否</td>
+                <td>是否显示单文件进度条，默认显示</td>
+            </tr>
+            <tr>
+                <td>filelSavePath</td>
+                <td></td>
+                <td>否</td>
+                <td>文件上传保存路径，会当做一个参数传到后台</td>
+            </tr>
+            <tr>
+                <td>beforeUpload</td>
+                <td></td>
+                <td>否</td>
+                <td>在上传前面执行的回调函数,如：<br/>
+<pre>
+beforeUpload:beforeUploadFun,
+..........
+ function beforeUploadFun(opt){
+    opt.otherData =[{"name":"你要上传的参数","value":"你要上传的值"}];
+}
+</pre>
+                    注意：有一个参数opt很重要，需要加上
+                </td>
+            <tr>
+                <td>onUpload</td>
+                <td></td>
+                <td>否</td>
+                <td>在上传后执行的函数,如：<br/>
+                    <pre>
+onUpload:onUploadFun,
+..........
+function onUploadFun(opt,data){
+        alert(data);
+        uploadTools.uploadError(opt);//显示上传错误
+    }
+</pre>
+                    注意：有两个重要的参数：opt,data
+                </td>
+            </tr>
+
+        </tbody>
+    </table>
+    <h3>几个重要的函数</h3>
+    <b>1、上传失败后的显示:</b><br/>
+    <code style="font-size: 16px;line-height: 30px;">uploadTools.uploadError(opt);//显示上传错误</code><br/>
+    <b>2、获取重要opt对象:</b><br/>
+    <code style="font-size: 16px;line-height: 30px;">var opt = uploadTools.getOpt("容器id");</code><br/>
+    <b>3、带参数上传form表单数据，获取表达数据方法:</b><br/>
+    <code style="font-size: 16px;line-height: 30px;">var formData = formTake.getData("表单的id");//普通的表单数据获取</code><br/>
+    <code style="font-size: 16px;line-height: 30px;">var formData = formTake.getDataWithUploadFile("表单的id");</code><br/>
+    <p style="color:red">注意这个方法（formTake.getDataWithUploadFile("表单的id");）,如果连数据和文件上传需要用到一个回调函数（beforeUpload），这个函数，函数里面需要设置:<code>opt.otherData =[{"name":"你要上传的参数","value":"你要上传的值"}]</code>,后面这种JSON格式可以通过该方法获取</p>
+    演示：
+    <form id="myform">
+        姓名：<input type="text" name="name" value="张三"><br/>
+        年龄：<input type="text" name="age" value="33"><br/>
+        性别：<input type="radio" checked="checked" name="sex" value="female">男<input type="radio"  name="sex" value="male">女<br/>
+        描述：<textarea cols="50" rows="5" name="des" >你好，这是张三，长安人士</textarea><br/>
+        <button onclick="getFormData1()"><code>formTake.getData获取</code></button>
+        <button onclick="getFormData2()"><code>formTake.getDataWithUploadFile获取</code></button>
+    </form>
+</body>
+</html>
+
+<script type="text/javascript">
+    $("#fileUploadContent").initUpload({
+        "uploadUrl":"#",//上传文件信息地址
+        "progressUrl":"#",//获取进度信息地址，可选，注意需要返回的data格式如下（{bytesRead: 102516060, contentLength: 102516060, items: 1, percent: 100, startTime: 1489223136317, useTime: 2767}）
+        "selfUploadBtId":"selfUploadBt",//自定义文件上传按钮id
+        "isHiddenUploadBt":false,//是否隐藏上传按钮
+        "isHiddenCleanBt":false,//是否隐藏清除按钮
+        "isAutoClean":true,//是否上传完成后自动清除
+        "velocity":10,//模拟进度上传数据
+        //"showSummerProgress":false,//总进度条，默认限制
+        //"scheduleStandard":true,//模拟进度的方式，设置为true是按总进度，用于控制上传时间，如果设置为false,按照文件数据的总量,默认为false
+        //"size":350,//文件大小限制，单位kb,默认不限制
+        //"maxFileNumber":3,//文件个数限制，为整数
+        //"filelSavePath":"",//文件上传地址，后台设置的根目录
+        //"beforeUpload":beforeUploadFun,//在上传前执行的函数
+        //"onUpload":onUploadFun，//在上传后执行的函数
+       // autoCommit:true,//文件是否自动上传
+        //"fileType":['png','jpg','docx','doc']，//文件类型限制，默认不限制，注意写的是文件后缀
+
+    });
+
+    function beforeUploadFun(opt){
+        opt.otherData =[{"name":"你要上传的参数","value":"你要上传的值"}];
+    }
+    function onUploadFun(opt,data){
+        alert(data);
+        uploadTools.uploadError(opt);//显示上传错误
+    }
+     function testUpload(){
+    	var opt = uploadTools.getOpt("fileUploadContent");
+    	uploadEvent.uploadFileEvent(opt);
+    }
+
+    function getFormData1(){
+         var formData = formTake.getData("myform");
+         alert(JSON.stringify(formData));
+    }
+    function getFormData2(){
+        var formData = formTake.getDataWithUploadFile("myform");
+        alert(JSON.stringify(formData));
+    }
+</script>
